@@ -1,0 +1,101 @@
+@keyframes slideFromTop {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromBottom {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInCenter {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+.colAnim {
+  animation: slideFromTop ease-out;
+  animation-fill-mode: both;
+}
+
+.colAnimFromBottom {
+  animation: slideFromBottom 1.4s ease-out;
+  animation-fill-mode: both;
+}
+
+.colAnimFromTop {
+  animation: slideFromTop 1.4s ease-out;
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
+}
+
+.textHoverWrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.textHoverAnimation {
+  opacity: 0;
+  transform: translateX(-100%);
+  animation-fill-mode: forwards;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  z-index: 10;
+}
+
+.projectCard:hover .textHoverAnimation {
+  animation: slideInCenter 0.5s ease forwards;
+}
+
+.projectCard:not(:hover) .textHoverAnimation {
+  animation: slideOutLeft 0.5s ease forwards;
+}
+
+.disabledInteractions {
+  pointer-events: none;
+  user-select: none;
+}
+
+.disabledInteractions * {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+.hiddenUntilVisible {
+  opacity: 0;
+  pointer-events: none;
+}

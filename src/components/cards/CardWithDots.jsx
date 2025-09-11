@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
-import { Github, Linkedin, Mail, Check, Newspaper } from "lucide-react"
+import { Github, Linkedin, Mail, Check, Newspaper } from 'lucide-react'
 
 const CardWithDots = ({ title, description, type, href }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
-  const email = ""
+  const email = "tu-email@ejemplo.com"
 
   const handleMouseEnter = () => {
     setIsHovered(true)
@@ -14,19 +14,12 @@ const CardWithDots = ({ title, description, type, href }) => {
     setIsHovered(false)
   }
 
-  const handleEmailClick = () => {
-    if (type === "email") {
-      navigator.clipboard.writeText(email)
-      setIsCopied(true)
-    }
-  }
   const handleClick = () => {
     if (type === "email") {
       navigator.clipboard.writeText(email)
       setIsCopied(true)
     } else if (href) {
-      window.open(href, '_blank') // Abre en nueva pestaña
-      // o usar: window.location.href = href // Para abrir en la misma pestaña
+      window.open(href, '_blank')
     }
   }
 
@@ -40,15 +33,16 @@ const CardWithDots = ({ title, description, type, href }) => {
   }, [isCopied])
 
   const renderIcon = () => {
+    const iconSize = "w-4 h-4 lg:w-6 lg:h-6"
     switch (type) {
       case "github":
-        return <Github className="w-7 h-7 text-white" />
+        return <Github className={`${iconSize} text-white`} />
       case "linkedin":
-        return <Linkedin className="w-7 h-7 text-white" />
+        return <Linkedin className={`${iconSize} text-white`} />
       case "CV":
-        return <Newspaper className="w-7 h-7 text-white" />
+        return <Newspaper className={`${iconSize} text-white`} />
       case "email":
-        return isCopied ? <Check className="w-7 h-7 text-white" /> : <Mail className="w-7 h-7 text-white" />
+        return isCopied ? <Check className={`${iconSize} text-white`} /> : <Mail className={`${iconSize} text-white`} />
       default:
         return null
     }
@@ -57,11 +51,13 @@ const CardWithDots = ({ title, description, type, href }) => {
   const renderText = () => {
     switch (type) {
       case "github":
-        return "Ir a mi Github"
+        return "Github"
       case "linkedin":
-        return "Ir a mi LinkedIn"
+        return "LinkedIn"
       case "email":
-        return isCopied ? "Correo copiado" : "Send Email"
+        return isCopied ? "Copiado" : "Email"
+      case "CV":
+        return "CV"
       default:
         return title
     }
@@ -78,49 +74,44 @@ const CardWithDots = ({ title, description, type, href }) => {
   }, []);
 
   return (
-    <div>
-    {/* Contenedor con separación visual */}
-    <div className="relative pb-7">
-      {/* Carta centrada con espacio */}
-      <div
-        className={`relative z-10 mt-4 rounded-2xl 
-          ${isLightMode ? "bg-white bg-opacity-80 border-neutral-300" : "bg-neutral-800 bg-opacity-70 border-neutral-700"}
-          backdrop-blur-sm grid justify-items-center items-center h-20 cursor-pointer overflow-hidden 
-          group-hover:border-neutral-600 transition-all duration-300`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={handleClick}
-      >
-        {/* Animación de fondo (círculos grandes) */}
+    <div className="w-full">
+      <div className="relative">
         <div
-          className={`absolute rounded-full 
-            ${isLightMode ? "bg-neutral-200" : "bg-neutral-600"}
-            transition-all duration-700 delay-100 ease-in-out ${
-              isHovered ? "scale-[30] opacity-100" : "scale-0 opacity-0"
-            }`}
-          style={{ width: "10px", height: "10px" }}
-        />
-
-        {/* Contenido normal */}
-        <div className={`transition-opacity duration-300 text-center ${isHovered ? "opacity-0" : "opacity-100"} ${isLightMode ? "text-neutral-800" : ""}`}>
-          <h3>{title}</h3>
-          {type === "email" && (
-            <p>{email}</p>
-          )}
-        </div>
-        
-        {/* Contenido hover */}
-        <div
-          className={`absolute inset-0 flex flex-col items-center justify-center gap-2 transition-all duration-500 ${
-            isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          } ${isLightMode ? "text-neutral-800" : ""}`}
+          className={`relative z-10 rounded-lg lg:rounded-2xl
+            ${isLightMode ? "bg-white bg-opacity-80 border-neutral-300" : "bg-neutral-800 bg-opacity-70 border-neutral-700"}
+            backdrop-blur-sm grid justify-items-center items-center h-12 lg:h-20 cursor-pointer overflow-hidden 
+            transition-all duration-300 px-2 lg:px-4`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onClick={handleClick}
         >
-          {renderIcon()}
-          <p>{renderText()}</p>
+          {/* Animación de fondo */}
+          <div
+            className={`absolute rounded-full 
+              ${isLightMode ? "bg-neutral-200" : "bg-neutral-600"}
+              transition-all duration-700 delay-100 ease-in-out ${
+                isHovered ? "scale-[30] opacity-100" : "scale-0 opacity-0"
+              }`}
+            style={{ width: "10px", height: "10px" }}
+          />
+
+          {/* Contenido normal */}
+          <div className={`transition-opacity duration-300 text-center ${isHovered ? "opacity-0" : "opacity-100"} ${isLightMode ? "text-neutral-800" : ""}`}>
+            <h3 className="text-xs lg:text-base font-medium">{title}</h3>
+          </div>
+          
+          {/* Contenido hover */}
+          <div
+            className={`absolute inset-0 flex flex-col items-center justify-center gap-1 lg:gap-2 transition-all duration-500 ${
+              isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            } ${isLightMode ? "text-neutral-800" : ""}`}
+          >
+            {renderIcon()}
+            <p className="text-xs lg:text-base font-medium text-center px-2">{renderText()}</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   )
 }
 

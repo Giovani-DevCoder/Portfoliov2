@@ -5,88 +5,97 @@ const FloatingTechIcons = () => {
   const containerRef = useRef(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [icons, setIcons] = useState([])
+  const [screenSize, setScreenSize] = useState('desktop')
   const animationRef = useRef()
   const lastTimeRef = useRef(0)
 
+  const [isLightMode, setIsLightMode] = useState(document.body.classList.contains("light-mode"));
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsLightMode(document.body.classList.contains("light-mode"));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const updateScreenSize = () => {
+      if (window.innerWidth < 1024) {
+        setScreenSize('mobile')
+      } else {
+        setScreenSize('desktop')
+      }
+    }
+
+    updateScreenSize()
+    window.addEventListener('resize', updateScreenSize)
+    return () => window.removeEventListener('resize', updateScreenSize)
+  }, [])
+
+  const getResponsiveConfig = () => {
+    const configs = {
+      mobile: {
+        iconCount: 4,
+        basePositions: [
+          { baseX: -60, baseY: -40, size: 20 },
+          { baseX: 70, baseY: 15, size: 18 },
+          { baseX: -80, baseY: -15, size: 22 },
+          { baseX: 50, baseY: -60, size: 19 }
+        ],
+        floatRange: 1,
+        repelDistance: 40
+      },
+      desktop: {
+        iconCount: 7,
+        basePositions: [
+          { baseX: -180, baseY: -120, size: 64 },
+          { baseX: 200, baseY: 30, size: 38 },
+          { baseX: -220, baseY: -40, size: 51 },
+          { baseX: 160, baseY: -150, size: 41 },
+          { baseX: -120, baseY: -200, size: 44 },
+          { baseX: 258, baseY: -65, size: 50 },
+          { baseX: 65, baseY: -170, size: 51 }
+        ],
+        floatRange: 2.5,
+        repelDistance: 100
+      }
+    }
+    return configs[screenSize]
+  }
+
   const techIcons = [
-    {
-      Icon: SiNodedotjs,
-      name: "Node.js",
-      baseX: -180,
-      baseY: -120,
-      size: 64,
-      floatRange: 2,
-      floatSpeed: 0.024,
-    },
-    {
-      Icon: SiTailwindcss,
-      name: "Tailwind",
-      baseX: 200,
-      baseY: 30,
-      size: 38,
-      floatRange: 2.5,
-      floatSpeed: 0.028,
-    },
-    {
-      Icon: SiPostgresql,
-      name: "PostgreSQL",
-      baseX: -220,
-      baseY: -40,
-      size: 51,
-      floatRange: 1.8,
-      floatSpeed: 0.035,
-    },
-    {
-      Icon: SiMongodb,
-      name: "MongoDB",
-      baseX: 160,
-      baseY: -150,
-      size: 41,
-      floatRange: 2.2,
-      floatSpeed: 0.028,
-    },
-    {
-      Icon: SiExpress,
-      name: "Express",
-      baseX: -120,
-      baseY: -200,
-      size: 44,
-      floatRange: 1.5,
-      floatSpeed: 0.028,
-    },
-    {
-      Icon: SiDocker,
-      name: "Docker",
-      baseX: 258,
-      baseY: -65,
-      size: 50,
-      floatRange: 2.3,
-      floatSpeed: 0.028,
-    },
-    {
-      Icon: SiJavascript,
-      name: "JavaScript",
-      baseX: 65,
-      baseY: -170,
-      size: 51,
-      floatRange: 2,
-      floatSpeed: 0.028,
-    },
+    { Icon: SiNodedotjs, name: "Node.js" },
+    { Icon: SiTailwindcss, name: "Tailwind" },
+    { Icon: SiPostgresql, name: "PostgreSQL" },
+    { Icon: SiMongodb, name: "MongoDB" },
+    { Icon: SiExpress, name: "Express" },
+    { Icon: SiDocker, name: "Docker" },
+    { Icon: SiJavascript, name: "JavaScript" },
   ]
 
   useEffect(() => {
-    const initialIcons = techIcons.map((tech, index) => ({
-      ...tech,
-      id: index,
-      currentX: tech.baseX,
-      currentY: tech.baseY,
-      offsetX: 0,
-      offsetY: 0,
-      floatPhase: Math.random() * Math.PI * 2,
-      isRepelling: false,
-    }))
+    const config = getResponsiveConfig()
+    const initialIcons = techIcons.slice(0, config.iconCount).map((tech, index) => {
+      const position = config.basePositions[index]
+      return {
+        ...tech,
+        id: index,
+        baseX: position.baseX,
+        baseY: position.baseY,
+        size: position.size,
+        currentX: position.baseX,
+        currentY: position.baseY,
+        offsetX: 0,
+        offsetY: 0,
+        floatPhase: Math.random() * Math.PI * 2,
+        floatRange: config.floatRange,
+        floatSpeed: 0.024 + Math.random() * 0.01,
+        isRepelling: false,
+      }
+    })
     setIcons(initialIcons)
-  }, [])
+  }, [screenSize])
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -109,6 +118,8 @@ const FloatingTechIcons = () => {
   useEffect(() => {
     if (icons.length === 0) return
 
+    const config = getResponsiveConfig()
+
     const animate = (timestamp) => {
       const deltaTime = lastTimeRef.current ? timestamp - lastTimeRef.current : 4
       lastTimeRef.current = timestamp
@@ -123,21 +134,22 @@ const FloatingTechIcons = () => {
           const baseWithFloatX = icon.baseX + floatX
           const baseWithFloatY = icon.baseY + floatY
 
-          // Línea corregida:
           const distanceToMouse = Math.sqrt(
             Math.pow(mousePos.x - baseWithFloatX, 2) + Math.pow(mousePos.y - baseWithFloatY, 2)
           );
+          
           let offsetX = 0
           let offsetY = 0
           let isRepelling = false
           
-          if (distanceToMouse < 100) {
+          if (distanceToMouse < config.repelDistance) {
             isRepelling = true
-            const repelForce = Math.max(0, (100 - distanceToMouse) / 100)
+            const repelForce = Math.max(0, (config.repelDistance - distanceToMouse) / config.repelDistance)
             const angle = Math.atan2(baseWithFloatY - mousePos.y, baseWithFloatX - mousePos.x)
 
-            offsetX = Math.cos(angle) * repelForce * 50
-            offsetY = Math.sin(angle) * repelForce * 50
+            const repelStrength = screenSize === 'mobile' ? 25 : 50
+            offsetX = Math.cos(angle) * repelForce * repelStrength
+            offsetY = Math.sin(angle) * repelForce * repelStrength
           }
 
           const smoothFactor = 0.06
@@ -169,12 +181,12 @@ const FloatingTechIcons = () => {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [icons.length, mousePos])
+  }, [icons.length, mousePos, screenSize])
 
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 pointer-events-none z-15"
+      className="absolute inset-0 pointer-events-none z-15 overflow-hidden"
       style={{
         width: "100%",
         height: "100%",
@@ -191,7 +203,7 @@ const FloatingTechIcons = () => {
             className="absolute transition-all duration-300 ease-out"
             style={{
               transform: `translate(${icon.currentX}px, ${icon.currentY}px)`,
-              opacity: icon.isRepelling ? 0.9 : 0.8,
+              opacity: icon.isRepelling ? 0.9 : 0.6,
               filter: icon.isRepelling
                 ? "brightness(1.3) drop-shadow(0 0 12px rgba(255, 255, 255, 0.5))"
                 : "brightness(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3))",
@@ -199,7 +211,7 @@ const FloatingTechIcons = () => {
           >
             <Icon
               size={icon.size}
-              className="text-white"
+              className={isLightMode ? "text-black" : "text-white"}
               style={{
                 transform: `rotate(${Math.sin(icon.floatPhase) * 1}deg)`,
                 transition: "transform 1.5s ease-out",

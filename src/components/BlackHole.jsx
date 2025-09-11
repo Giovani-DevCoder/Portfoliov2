@@ -1,174 +1,195 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 
-export default function EnhancedBlackHole({ coreImageWEBP, coreImagePNG, ringImageWEBP, ringImagePNG }) {
-  const filterRef = useRef(null)
-  const lastTimeRef = useRef(0)
-  const [isLoaded, setIsLoaded] = useState(false)
+export default function EnhancedBlackHole({ coreImageWEBP, ringImageWEBP }) {
+  const filterRef = useRef(null);
+  const animationFrameRef = useRef(null);
+  const lastTimeRef = useRef(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [screenSize, setScreenSize] = useState('desktop');
 
-  // Usamos un valor constante para la velocidad de rotación
-  const ROTATION_SPEED = 0.00005 // Velocidad más lenta para un movimiento más suave
+  // Constantes y refs optimizados
+  const ROTATION_SPEED = 0.00005;
+  const phaseRef = useRef(0);
 
-  // Usamos un estado para controlar la fase de la animación
-  const phaseRef = useRef(0)
+  // 1. Memoizar configuraciones responsivas
+  const config = useMemo(() => {
+    const configs = {
+      mobile: {
+        size: 'min(70vw, 300px)',
+        aspectRatio: 'min(73.5vw, 315px)',
+        distortionScale: 0.6,
+        filterSize: '150%',
+        blurAmount: '2',
+        softBlur: '0.3'
+      },
+      tablet: {
+        size: 'min(60vw, 400px)',
+        aspectRatio: 'min(63vw, 420px)',
+        distortionScale: 0.8,
+        filterSize: '180%',
+        blurAmount: '3',
+        softBlur: '0.5'
+      },
+      desktop: {
+        size: 'min(50vw, 500px)',
+        aspectRatio: 'min(52.5vw, 525px)',
+        distortionScale: 1,
+        filterSize: '200%',
+        blurAmount: '3',
+        softBlur: '0.5'
+      }
+    };
+    return configs[screenSize];
+  }, [screenSize]);
 
+  // 2. Optimizar el detector de tamaño de pantalla
   useEffect(() => {
-    // Función para animar con requestAnimationFrame usando timestamp
-    const animate = (timestamp) => {
-      const turbulence = filterRef.current?.querySelector("feTurbulence")
-      const displacementMap = filterRef.current?.querySelector("feDisplacementMap")
-      const turbulence2 = filterRef.current?.querySelector("#turbulence2")
-      const displacementMap2 = filterRef.current?.querySelector("#displacementMap2")
-      const turbulence3 = filterRef.current?.querySelector("#turbulence3")
-      const displacementMap3 = filterRef.current?.querySelector("#displacementMap3")
+    const handleResize = () => {
+      const width = window.innerWidth;
+      let newSize = 'desktop';
+      
+      if (width < 640) newSize = 'mobile';
+      else if (width < 1024) newSize = 'tablet';
+      
+      setScreenSize(newSize);
+    };
 
-      if (!turbulence || !displacementMap || !turbulence2 || !displacementMap2 || !turbulence3 || !displacementMap3)
-        return
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(document.documentElement);
+    
+    return () => resizeObserver.disconnect();
+  }, []);
 
-      // Calculamos el delta de tiempo para mantener una velocidad constante
-      // independientemente de la frecuencia de refresco
-      if (!lastTimeRef.current) lastTimeRef.current = timestamp
-      const deltaTime = timestamp - lastTimeRef.current
-      lastTimeRef.current = timestamp
+  // 3. Memoizar la función de animación
+  const animate = useCallback((timestamp) => {
+    if (!filterRef.current || !isLoaded) return;
 
-      // Incrementamos la fase de manera constante basada en el tiempo transcurrido
-      phaseRef.current = (phaseRef.current + ROTATION_SPEED * deltaTime) % 1
+    const elements = {
+      turbulence: filterRef.current.querySelector("feTurbulence"),
+      displacementMap: filterRef.current.querySelector("feDisplacementMap"),
+      turbulence2: filterRef.current.querySelector("#turbulence2"),
+      displacementMap2: filterRef.current.querySelector("#displacementMap2"),
+      turbulence3: filterRef.current.querySelector("#turbulence3"),
+      displacementMap3: filterRef.current.querySelector("#displacementMap3")
+    };
 
-      // Calculamos los valores de la distorsión basados en funciones sinusoidales
-      // para crear un movimiento cíclico y fluido
-      const sinValue = Math.sin(phaseRef.current * Math.PI * 2)
-      const cosValue = Math.cos(phaseRef.current * Math.PI * 2)
+    if (!elements.turbulence || !elements.displacementMap) return;
 
-      // Valores para la primera capa de distorsión (movimiento principal)
-      const baseFreqX = 0.02 + Math.abs(sinValue) * 0.01
-      const baseFreqY = 0.016 + Math.abs(cosValue) * 0.008
-      const scale = 15 + Math.abs(sinValue) * 10 // Distorsión más intensa
+    if (!lastTimeRef.current) lastTimeRef.current = timestamp;
+    const deltaTime = timestamp - lastTimeRef.current;
+    lastTimeRef.current = timestamp;
 
-      // Valores para la segunda capa de distorsión (detalle fino)
-      const baseFreqX2 = 0.05 + Math.abs(cosValue) * 0.02
-      const baseFreqY2 = 0.04 + Math.abs(sinValue) * 0.015
-      const scale2 = 8 + Math.abs(cosValue) * 5
+    phaseRef.current = (phaseRef.current + ROTATION_SPEED * deltaTime) % 1;
 
-      // Valores para la tercera capa de distorsión (movimiento contrario)
-      const baseFreqX3 = 0.03 + Math.abs(sinValue * cosValue) * 0.01
-      const baseFreqY3 = 0.025 + Math.abs(sinValue + cosValue) * 0.01
-      const scale3 = 12 + Math.abs(sinValue * cosValue) * 8
+    const sinValue = Math.sin(phaseRef.current * Math.PI * 2);
+    const cosValue = Math.cos(phaseRef.current * Math.PI * 2);
+    const scaleMultiplier = config.distortionScale;
 
-      turbulence.setAttribute("baseFrequency", `${baseFreqX} ${baseFreqY}`)
-      turbulence.setAttribute("seed", (phaseRef.current * 100).toString())
-      displacementMap.setAttribute("scale", scale.toString())
+    // 4. Optimizar cálculos de animación
+    const updateTurbulence = (element, baseX, baseY, scale, seedOffset = 0) => {
+      if (!element) return;
+      element.setAttribute("baseFrequency", `${baseX} ${baseY}`);
+      element.setAttribute("seed", ((phaseRef.current * 100 + seedOffset) % 100).toString());
+    };
 
-      turbulence2.setAttribute("baseFrequency", `${baseFreqX2} ${baseFreqY2}`)
-      turbulence2.setAttribute("seed", ((phaseRef.current * 100 + 50) % 100).toString())
-      displacementMap2.setAttribute("scale", scale2.toString())
+    const updateDisplacement = (element, scale) => {
+      if (!element) return;
+      element.setAttribute("scale", (scale * scaleMultiplier).toString());
+    };
 
-      turbulence3.setAttribute("baseFrequency", `${baseFreqX3} ${baseFreqY3}`)
-      turbulence3.setAttribute("seed", ((phaseRef.current * 100 + 25) % 100).toString())
-      displacementMap3.setAttribute("scale", scale3.toString())
+    // Capa 1
+    updateTurbulence(
+      elements.turbulence,
+      0.02 + Math.abs(sinValue) * 0.01,
+      0.016 + Math.abs(cosValue) * 0.008
+    );
+    updateDisplacement(elements.displacementMap, 15 + Math.abs(sinValue) * 10);
 
-      requestAnimationFrame(animate)
-    }
+    // Capa 2
+    updateTurbulence(
+      elements.turbulence2,
+      0.05 + Math.abs(cosValue) * 0.02,
+      0.04 + Math.abs(sinValue) * 0.015,
+      50
+    );
+    updateDisplacement(elements.displacementMap2, 8 + Math.abs(cosValue) * 5);
 
+    // Capa 3
+    updateTurbulence(
+      elements.turbulence3,
+      0.03 + Math.abs(sinValue * cosValue) * 0.01,
+      0.025 + Math.abs(sinValue + cosValue) * 0.01,
+      25
+    );
+    updateDisplacement(elements.displacementMap3, 12 + Math.abs(sinValue * cosValue) * 8);
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+  }, [isLoaded, config.distortionScale]);
+
+  // 5. Manejo eficiente de la animación
+  useEffect(() => {
     if (isLoaded) {
-      requestAnimationFrame(animate)
+      animationFrameRef.current = requestAnimationFrame(animate);
     }
 
     return () => {
-      lastTimeRef.current = 0
-    }
-  }, [isLoaded])
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      lastTimeRef.current = 0;
+    };
+  }, [animate, isLoaded]);
 
-  // Función para manejar la carga de imágenes
-  const handleImagesLoaded = () => {
-    setIsLoaded(true)
-  }
+  // 6. Memoizar el SVG de filtros
+  const svgFilters = useMemo(() => (
+    <svg ref={filterRef} className="absolute w-0 h-0" aria-hidden="true">
+      <defs>
+        {/* Filtros optimizados */}
+        <filter id="distortion" x="-50%" y="-50%" width={config.filterSize} height={config.filterSize}>
+          <feTurbulence type="fractalNoise" baseFrequency="0.02 0.016" numOctaves="3" seed="0" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+
+        <filter id="distortion2" x="-50%" y="-50%" width={config.filterSize} height={config.filterSize}>
+          <feTurbulence id="turbulence2" type="turbulence" baseFrequency="0.05 0.04" numOctaves="2" seed="50" result="noise2" />
+          <feDisplacementMap id="displacementMap2" in="SourceGraphic" in2="noise2" scale="8" xChannelSelector="G" yChannelSelector="B" />
+        </filter>
+
+        <filter id="distortion3" x="-50%" y="-50%" width={config.filterSize} height={config.filterSize}>
+          <feTurbulence id="turbulence3" type="fractalNoise" baseFrequency="0.03 0.025" numOctaves="1" seed="25" result="noise3" />
+          <feDisplacementMap id="displacementMap3" in="SourceGraphic" in2="noise3" scale="12" xChannelSelector="B" yChannelSelector="R" />
+        </filter>
+
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation={config.blurAmount} result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+
+        <filter id="softBlur">
+          <feGaussianBlur stdDeviation={config.softBlur} />
+        </filter>
+      </defs>
+    </svg>
+  ), [config.filterSize, config.blurAmount, config.softBlur]);
+
+  // 7. Manejo de carga de imágenes optimizado
+  const handleImageLoad = useCallback(() => {
+    setIsLoaded(true);
+  }, []);
 
   return (
     <div className="w-full h-full flex items-center justify-center overflow-hidden">
-      {/* Definición de filtros SVG optimizados con múltiples capas de distorsión */}
-      <svg ref={filterRef} className="absolute w-0 h-0" aria-hidden="true">
-        <defs>
-          {/* Primera capa de distorsión - Movimiento principal */}
-          <filter id="distortion" x="-50%" y="-50%" width="200%" height="200%" colorInterpolationFilters="sRGB">
-            <feTurbulence type="fractalNoise" baseFrequency="0.02 0.016" numOctaves="3" seed="0" result="noise" />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="noise"
-              scale="15"
-              xChannelSelector="R"
-              yChannelSelector="G"
-              result="displacement1"
-            />
-          </filter>
+      {svgFilters}
 
-          {/* Segunda capa de distorsión - Detalle fino */}
-          <filter id="distortion2" x="-50%" y="-50%" width="200%" height="200%" colorInterpolationFilters="sRGB">
-            <feTurbulence
-              id="turbulence2"
-              type="turbulence"
-              baseFrequency="0.05 0.04"
-              numOctaves="2"
-              seed="50"
-              result="noise2"
-            />
-            <feDisplacementMap
-              id="displacementMap2"
-              in="SourceGraphic"
-              in2="noise2"
-              scale="8"
-              xChannelSelector="G"
-              yChannelSelector="B"
-              result="displacement2"
-            />
-          </filter>
-
-          {/* Tercera capa de distorsión - Movimiento contrario */}
-          <filter id="distortion3" x="-50%" y="-50%" width="200%" height="200%" colorInterpolationFilters="sRGB">
-            <feTurbulence
-              id="turbulence3"
-              type="fractalNoise"
-              baseFrequency="0.03 0.025"
-              numOctaves="1"
-              seed="25"
-              result="noise3"
-            />
-            <feDisplacementMap
-              id="displacementMap3"
-              in="SourceGraphic"
-              in2="noise3"
-              scale="12"
-              xChannelSelector="B"
-              yChannelSelector="R"
-              result="displacement3"
-            />
-          </filter>
-
-          {/* Filtro combinado para aplicar todas las distorsiones */}
-          <filter id="combinedDistortion" x="-50%" y="-50%" width="200%" height="200%" colorInterpolationFilters="sRGB">
-            <feImage xlinkHref="#distortedRing" result="distorted1" />
-            <feImage xlinkHref="#distortedRing2" result="distorted2" />
-            <feImage xlinkHref="#distortedRing3" result="distorted3" />
-            <feBlend mode="screen" in="distorted1" in2="distorted2" result="blended" />
-            <feBlend mode="screen" in="blended" in2="distorted3" result="finalBlend" />
-            <feComposite in="finalBlend" in2="SourceGraphic" operator="over" />
-          </filter>
-
-          {/* Efecto de brillo */}
-          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
-            <feGaussianBlur stdDeviation="3" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-
-          {/* Efecto de desenfoque para suavizar bordes */}
-          <filter id="softBlur" colorInterpolationFilters="sRGB">
-            <feGaussianBlur stdDeviation="0.5" />
-          </filter>
-        </defs>
-      </svg>
-
-      <div className="relative w-[min(50vw,500px)] h-[min(52.5vw,525px)]">
-        {/* Aro del agujero negro con distorsión en múltiples capas */}
+      <div 
+        className="relative"
+        style={{
+          width: config.size,
+          height: config.aspectRatio
+        }}
+      >
+        {/* Capas optimizadas */}
         <div
-          id="distortedRing"
           className="absolute inset-0 z-10"
           style={{
             filter: "url(#distortion)",
@@ -179,23 +200,17 @@ export default function EnhancedBlackHole({ coreImageWEBP, coreImagePNG, ringIma
           <picture>
             <source srcSet={ringImageWEBP} type="image/webp" />
             <img
-              src={ringImagePNG || "/placeholder.svg"}
-              alt="Aro del agujero negro - capa 1"
+              alt="Aro del agujero negro"
               className="w-full h-full object-contain"
               loading="eager"
               decoding="async"
-              onLoad={handleImagesLoaded}
+              onLoad={handleImageLoad}
               style={{ opacity: 0.9 }}
             />
           </picture>
         </div>
 
-        {/* Segunda capa de distorsión */}
-        
-
-        {/* Tercera capa de distorsión */}
         <div
-          id="distortedRing3"
           className="absolute inset-0 z-12"
           style={{
             filter: "url(#distortion3)",
@@ -207,7 +222,6 @@ export default function EnhancedBlackHole({ coreImageWEBP, coreImagePNG, ringIma
           <picture>
             <source srcSet={ringImageWEBP} type="image/webp" />
             <img
-              src={ringImagePNG || "/placeholder.svg"}
               alt="Aro del agujero negro - capa 3"
               className="w-full h-full object-contain"
               loading="eager"
@@ -217,23 +231,18 @@ export default function EnhancedBlackHole({ coreImageWEBP, coreImagePNG, ringIma
           </picture>
         </div>
 
-        {/* Efecto de brillo adicional */}
-      
-
-        {/* Núcleo del agujero negro (sin distorsión) */}
         <div className="absolute inset-0 z-20">
           <picture>
             <source srcSet={coreImageWEBP} type="image/webp" />
             <img
-              src={coreImagePNG || "/placeholder.svg"}
               alt="Núcleo del agujero negro"
               className="w-full h-full object-contain"
               loading="eager"
-              onLoad={handleImagesLoaded}
+              onLoad={handleImageLoad}
             />
           </picture>
         </div>
       </div>
     </div>
-  )
+  );
 }

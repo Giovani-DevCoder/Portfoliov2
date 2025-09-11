@@ -4,12 +4,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@200&display=swap');
 
-
 body {
   background: linear-gradient(to bottom right, #181818 10%, #181818 60%);
-  min-height: 100vh; /* Cubre toda la pantalla */
+  min-height: 100vh;
   margin: 0;
-  color: white;      /* Texto legible */
+  color: white;
 }
 
 .Home {
@@ -18,14 +17,18 @@ body {
 
 h1 {
   font-family: "Oswald", sans-serif;
-  font-weight: 700;
-  font-size: 6em;
+  font-weight: 500;
+  font-size: 4.8em;
   letter-spacing: 1px;
+  line-height: 1.1;
+  max-width: 100%;
 }
 h2 {
   font-family: "Rajdhani", sans-serif;
-  font-weight: 200;
-  font-size: 3em;
+  font-weight: 500;
+  font-size: 2.5em;
+  line-height: 1.2;
+  max-width: 100%;
 }
 h3 {
   font-family: "Orbitron", sans-serif;
@@ -38,11 +41,11 @@ p{
   font-weight: 200;
   font-size: 1.2em;
   line-height: 1.5;
-  color: #dcdcdc; /* Color gris claro para el texto */
+  color: #dcdcdc;
 }
 
 .gradient-color {
-  background: linear-gradient(to bottom, #b5b5b5, #9c9c9c);
+  background: linear-gradient(to bottom, #dddddd, #cacaca);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -66,25 +69,25 @@ p{
   font-style: normal;
 }
 
-  .my-button {
-    background-color: white;
-    color: black;
-    height: 2.75rem; /* Equivalente a h-11 */
-    width: 7rem;     /* Equivalente a w-28 */
-    padding: 0.75rem 2rem; /* Equivalente a px-8 py-3 */
-    border-radius: 9999px; /* Equivalente a rounded-full */
-    border: 2px solid white;
-    transition: all 300ms ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .my-button:hover {
-    background-color: transparent;
-    color: white;
-  }
+.my-button {
+  background-color: white;
+  color: black;
+  height: 2.75rem;
+  width: 7rem;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  border: 2px solid white;
+  transition: all 300ms ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.my-button:hover {
+  background-color: transparent;
+  color: white;
+}
 
 .app-container {
   position: relative;
@@ -135,28 +138,35 @@ section {
   width: 100%;
   height: 100vh;
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   position: relative;
-  padding: 4em;
-  padding-right: 9em;
+  padding: 1rem;
+}
+
+.section-home {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  overflow: hidden;
 }
 
 .side-navigation {
   position: fixed;
-  right: 30px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 }
 
 .nav-indicator {
-  width: 30px;
-  height: 4px;
+  width: 15px;
+  height: 2px;
   background-color: rgba(255, 255, 255, 0.3);
   transition: all 0.4s ease;
   cursor: pointer;
@@ -165,7 +175,7 @@ section {
 
 .nav-indicator.active {
   background-color: white;
-  width: 50px;
+  width: 25px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
@@ -187,8 +197,8 @@ section {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
@@ -209,11 +219,11 @@ section {
 }
 
 .nav-button.down {
-  bottom: 30px;
+  bottom: 15px;
 }
 
 .nav-button.up {
-  top: 30px;
+  top: 15px;
 }
 
 .nav-button .button-animation {
@@ -226,8 +236,8 @@ section {
 .nav-button.up .button-animation::after {
   content: "";
   position: absolute;
-  width: 42px;
-  height: 42px;
+  width: 28px;
+  height: 28px;
   border: 2px solid rgb(172, 172, 172);
   border-radius: 50%;
   left: 50%;
@@ -252,8 +262,6 @@ section {
 
 .section-content {
   max-width: 1200px;
-  padding: 0 20px;
-  text-align: center;
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
@@ -268,35 +276,6 @@ section {
 .image-gradient {
   mask-image: linear-gradient(to bottom, rgb(0, 0, 0, 1) 82%, rgba(0, 0, 0, 0) 90%);
   -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 82%, rgba(0, 0, 0, 0) 93%);
-}
-
-
-@media (max-width: 768px) {
-  .side-navigation {
-    right: 15px;
-  }
-
-  .nav-indicator {
-    width: 20px;
-    height: 3px;
-  }
-
-  .nav-indicator.active {
-    width: 35px;
-  }
-
-  .nav-button {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .nav-button.down {
-    bottom: 20px;
-  }
-  
-  .nav-button.up {
-    top: 20px;
-  }
 }
 
 @keyframes miAnimacion {
@@ -351,7 +330,6 @@ section {
   animation: shooting-left 2s forwards linear;
 }
 
-/* Estilos para la barra de navegación */
 .nav-link {
   position: relative;
   overflow: hidden;
@@ -372,12 +350,10 @@ section {
   width: 100%;
 }
 
-/* Estilos para el menú de navegación */
 .nav-menu {
   backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.7);
 }
-
 
 .light-mode {
   background: #cecece !important;
@@ -400,7 +376,112 @@ section {
 }
 
 .light-mode .gradient-color {
-  background: linear-gradient(to bottom, #1a1a1a, #2e2e2e); /* Cambia estos colores a tu gusto */
+  background: linear-gradient(to bottom, #1a1a1a, #2e2e2e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+
+
+.project-card {
+  opacity: 0;
+}
+
+/* Mobile Specific Styles */
+@media (max-width: 1023px) {
+  .section-home {
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 0.875rem;
+  }
+  
+  p {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+  
+  .side-navigation {
+    right: 8px;
+    gap: 8px;
+  }
+  
+  .nav-indicator {
+    width: 12px;
+    height: 2px;
+  }
+  
+  .nav-indicator.active {
+    width: 20px;
+  }
+  
+  .nav-button {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .nav-button.down {
+    bottom: 10px;
+  }
+  
+  .nav-button.up {
+    top: 10px;
+  }
+  
+  .nav-button.down .button-animation::after,
+  .nav-button.up .button-animation::after {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Desktop Specific Styles */
+@media (min-width: 1024px) {
+  .section-home {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+  }
+  
+  .side-navigation {
+    right: 30px;
+    gap: 15px;
+  }
+  
+  .nav-indicator {
+    width: 30px;
+    height: 4px;
+  }
+  
+  .nav-indicator.active {
+    width: 50px;
+  }
+  
+  .nav-button {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .nav-button.down {
+    bottom: 30px;
+  }
+  
+  .nav-button.up {
+    top: 30px;
+  }
+  
+  .nav-button.down .button-animation::after,
+  .nav-button.up .button-animation::after {
+    width: 42px;
+    height: 42px;
+  }
+}
+

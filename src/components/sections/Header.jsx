@@ -15,7 +15,7 @@ const Header = ({ currentSection, navigateToSection, sections }) => {
 
   return (
     <header
-      className={`fixed top-9 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-4 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled ? "py-2 bg-black bg-opacity-70 backdrop-blur-md" : "py-4 bg-transparent"
       }`}
     >
