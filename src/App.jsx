@@ -10,21 +10,22 @@ import Header from "./components/sections/Header";
 import CircleTransitionModal from "./components/modal/CircleTransitionModal"
 
 function App() {
-  const [currentSection, setCurrentSection] = useState(0)
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  const totalSections = 4
-  const transitionDuration = 1000 // duración en ms, debe coincidir con la duración de la transición CSS
-  const [modalOpen, setModalOpen] = useState(false)
-  const [modalContent, setModalContent] = useState("")
+  const [currentSection, setCurrentSection] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const totalSections = 4;
+  const transitionDuration = 1000;
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState("");
 
-const handleOpenModal = (content) => {
-  setModalContent(content)
-  setModalOpen(true)
-}
-const handleCloseModal = () => {
-  setModalOpen(false)
-  setTimeout(() => setModalContent(""), 700)
-}
+  const handleOpenModal = (projectName) => {
+    setSelectedProject(projectName);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setTimeout(() => setSelectedProject(""), 700);
+  };
 
 
   useEffect(() => {
@@ -86,10 +87,10 @@ const handleCloseModal = () => {
 
   return (
     <div className="app-container">
-      {sections[currentSection].id === "projects" && (
+      {currentSection === 1 && (
       <CircleTransitionModal open={modalOpen} onClose={handleCloseModal}>
-        <h2>{modalContent}</h2>
-        {/* ... */}
+
+        {selectedProject}
       </CircleTransitionModal>
       )}
 
