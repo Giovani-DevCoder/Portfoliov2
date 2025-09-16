@@ -15,7 +15,8 @@ export const projectData = {
       "/ecommerce-1.jpg",
       "/ecommerce-2.jpg",
       "/ecommerce-3.jpg"
-    ]
+    ],
+        tag: ["React", "Node.js", "MongoDB", "Tailwind CSS", "Express"]
     },
     "Transcriptor": {
         title: "Transcriptor",

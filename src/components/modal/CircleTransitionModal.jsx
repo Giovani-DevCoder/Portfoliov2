@@ -107,11 +107,12 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
               >
                 <h2 className="text-2xl font-bold mb-4">{projectInfo.title}</h2>
                 <p className="text-gray-700 mb-6">{projectInfo.description}</p>
+                
 
                 {/* Carrusel de imágenes */}
                 {projectInfo.images && projectInfo.images.length > 0 && (
                   <div className="mb-6">
-                    <div className="relative w-2xl h-64 md:h-48 overflow-hidden rounded-xl bg-gray-100 mb-4">
+                    <div className="relative w-2xl h-48 md:h-96 overflow-hidden rounded-xl bg-gray-100 mb-4">
                       <img
                         src={projectInfo.images[currentImageIndex]}
                         alt={`${projectInfo.title} - Imagen ${currentImageIndex + 1}`}
@@ -139,7 +140,7 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
 
                     {/* Indicadores de imágenes */}
                     {projectInfo.images.length > 1 && (
-                      <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                      <div className="bottom-4 left-0 right-0 flex w-[59%] justify-center space-x-2">
                         {projectInfo.images.map((_, index) => (
                           <button
                             key={index}
@@ -155,6 +156,15 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
                     )}
                   </div>
                 )}
+                <div className="flex items-center content-center space-x-2">
+                  {projectInfo.tag.map((tag, index) => (
+                    <span 
+                    key = {index}
+                    className="text-neutral-200 bg-neutral-900 px-6 py-1 rounded-full cursor-default">
+                      {tag}
+                    </span>
+                    ))}
+                </div>
               </div>
             </div>
           </div>
