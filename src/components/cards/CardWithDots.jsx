@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Github, Linkedin, Mail, Check, Newspaper } from 'lucide-react'
+import { Github, Linkedin, Mail, Check, Newspaper, Box } from 'lucide-react'
 
 const CardWithDots = ({ title, description, type, href }) => {
   const [isHovered, setIsHovered] = useState(false)
@@ -37,13 +37,17 @@ const CardWithDots = ({ title, description, type, href }) => {
     switch (type) {
       case "github":
         return <Github className={`${iconSize} text-white`} />
+      case "githubProject":
+        return <Github className={`${iconSize} text-white`} />
       case "linkedin":
         return <Linkedin className={`${iconSize} text-white`} />
       case "CV":
         return <Newspaper className={`${iconSize} text-white`} />
       case "email":
         return isCopied ? <Check className={`${iconSize} text-white`} /> : <Mail className={`${iconSize} text-white`} />
-      default:
+      case "Ir":
+        return <Box className={`${iconSize} text-white`} />
+        default:
         return null
     }
   }
@@ -52,12 +56,16 @@ const CardWithDots = ({ title, description, type, href }) => {
     switch (type) {
       case "github":
         return "Github"
+      case "githubProject":
+        return "Ver codigo"
       case "linkedin":
         return "LinkedIn"
       case "email":
         return isCopied ? "Copiado" : "Email"
       case "CV":
         return "CV"
+      case "Ir":
+        return "Ver sitio web"
       default:
         return title
     }
@@ -78,7 +86,7 @@ const CardWithDots = ({ title, description, type, href }) => {
       <div className="relative">
         <div
           className={`relative z-10 rounded-lg lg:rounded-2xl
-            ${isLightMode ? "bg-white bg-opacity-80 border-neutral-300" : "bg-neutral-800 bg-opacity-70 border-neutral-700"}
+            ${isLightMode ? "bg-white bg-opacity-80 border-neutral-300" : "bg-neutral-800 bg-opacity-70"}
             backdrop-blur-sm grid justify-items-center items-center h-12 lg:h-20 cursor-pointer overflow-hidden 
             transition-all duration-300 px-2 lg:px-4`}
           onMouseEnter={handleMouseEnter}

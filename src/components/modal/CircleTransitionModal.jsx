@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 import { projectData } from "./ProjectsData"
+import CardsSectionModal from "./CardsSectionModal"
+import { techIcons } from "./Icons";
 
 const CircleTransitionModal = ({ open, onClose, children }) => {
   const [showContent, setShowContent] = useState(false)
@@ -63,11 +65,22 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
     }
   }, [open, isAutoPlaying, projectInfo?.images?.length])
 
+const renderIcon = () => {
+    const iconSize = "w-4 h-4 lg:w-6 lg:h-6"
+    switch (type) {
+      case "github":
+        return <Github className={`${iconSize} text-white`} />
+
+      default:
+        return null
+    }
+  }
+
   return (
     <div className={`fixed inset-0 z-[9999] pointer-events-none`} style={{ overflow: "hidden" }}>
       {/* Círculo de expansión - Solo efecto visual */}
       <div
-        className={`absolute top-1/2 left-0 bg-neutral-800 rounded-full transition-[width,height,transform] duration-700 ease-in-out
+        className={`absolute top-1/2 left-0 bg-zinc-900 rounded-full transition-[width,height,transform] duration-700 ease-in-out
           ${open ? "w-[200vw] h-[200vh] -translate-y-1/2 -translate-x-1/2" : "w-32 h-32 -translate-y-1/2 -translate-x-1/2"}
         `}
         style={{ pointerEvents: "none" }}
@@ -80,7 +93,7 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
           style={{ pointerEvents: open ? "auto" : "none" }}
         >
           <div
-            className={`relative transition-all duration-500 ease-out
+            className={`relative transition-all duration-500 ease-out rounded-2xl border-4 border-red-800
               ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
             `}
             style={{
@@ -92,7 +105,7 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
           >
             {/* Botón de cerrar */}
             <button
-              className="absolute -top-3 -right-3 bg-white rounded-full w-12 h-12 flex items-center justify-center text-black text-xl font-bold shadow-lg hover:bg-gray-100 transition-all duration-200 hover:scale-110 z-10"
+              className="absolute top-2 right-3 bg-white rounded-full w-12 h-12 flex items-center justify-center text-black text-xl font-bold shadow-lg hover:bg-gray-100 transition-all duration-200 hover:scale-110 z-10"
               onClick={onClose}
             >
               ×
@@ -106,62 +119,70 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
                 `}
               >
                 <h2 className="text-2xl font-bold mb-4">{projectInfo.title}</h2>
-                <p className="text-gray-700 mb-6">{projectInfo.description}</p>
-                
 
-                {/* Carrusel de imágenes */}
-                {projectInfo.images && projectInfo.images.length > 0 && (
-                  <div className="mb-6">
-                    <div className="relative w-2xl h-48 md:h-96 overflow-hidden rounded-xl bg-gray-100 mb-4">
-                      <img
-                        src={projectInfo.images[currentImageIndex]}
-                        alt={`${projectInfo.title} - Imagen ${currentImageIndex + 1}`}
-                        className="w-full h-full object-cover transition-opacity duration-500"
-                      />
-                      
-                      {/* Botones de navegación */}
-                      {projectInfo.images.length > 1 && (
-                        <>
-                          <button
-                            onClick={prevImage}
-                            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-                          >
-                            ‹
-                          </button>
-                          <button
-                            onClick={nextImage}
-                            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-                          >
-                            ›
-                          </button>
-                        </>
-                      )}
-                    </div>
+                <div className="flex gap-5">
 
-                    {/* Indicadores de imágenes */}
-                    {projectInfo.images.length > 1 && (
-                      <div className="bottom-4 left-0 right-0 flex w-[59%] justify-center space-x-2">
-                        {projectInfo.images.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => goToSlide(index)}
-                            className={`w-3 h-3 rounded-full ${
-                              currentImageIndex === index 
-                                ? 'bg-neutral-500' 
-                                : 'bg-gray-300 hover:bg-gray-400'
-                            }`}
-                          />
-                        ))}
-                      </div>
+                    {/* Carrusel de imágenes */}
+                    {projectInfo.images && projectInfo.images.length > 0 && (
+                        <div className="mb-6">
+                          <div className="relative w-2xl h-48 md:h-96 md:w-xl overflow-hidden rounded-xl bg-gray-100 mb-4">
+                            <img
+                              src={projectInfo.images[currentImageIndex]}
+                              alt={`${projectInfo.title} - Imagen ${currentImageIndex + 1}`}
+                              className="w-full h-full object-cover transition-opacity duration-500"
+                            />
+
+                            {/* Botones de navegación */}
+                            {projectInfo.images.length > 1 && (
+                              <>
+                                <button
+                                  onClick={prevImage}
+                                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                                >
+                                  ‹
+                                </button>
+                                <button
+                                  onClick={nextImage}
+                                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                                >
+                                  ›
+                                </button>
+                              </>
+                            )}
+                          </div>
+                          
+                          {/* Indicadores de imágenes */}
+                          {projectInfo.images.length > 1 && (
+                            <div className="bottom-4 left-0 right-0 flex justify-center space-x-2">
+                              {projectInfo.images.map((_, index) => (
+                                <button
+                                  key={index}
+                                  onClick={() => goToSlide(index)}
+                                  className={`w-3 h-3 rounded-full ${
+                                    currentImageIndex === index 
+                                      ? 'bg-neutral-500' 
+                                      : 'bg-gray-300 hover:bg-gray-400'
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                          )}
+                        </div>
                     )}
-                  </div>
-                )}
-                <div className="flex items-center content-center space-x-2">
+
+                    <div>
+                        <p className="text-gray-700 max-w-md mb-4">{projectInfo.description}</p>
+                        <CardsSectionModal />
+                    </div>
+                </div>
+
+                <div className="flex flex-wrap items-center content-center max-w-xl gap-4">
                   {projectInfo.tag.map((tag, index) => (
                     <span 
                     key = {index}
-                    className="text-neutral-200 bg-neutral-900 px-6 py-1 rounded-full cursor-default">
-                      {tag}
+                    className="flex items-center justify-center text-neutral-200 bg-red-800 gap-2 px-4 py-1 rounded-full cursor-default">
+                      {techIcons[tag] && <span>{techIcons[tag]}</span>}
+                      <span>{tag}</span>
                     </span>
                     ))}
                 </div>

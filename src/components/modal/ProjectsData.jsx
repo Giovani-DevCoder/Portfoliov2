@@ -6,11 +6,12 @@ export const projectData = {
       "/images/delivery-1.jpg",
       "/images/delivery-2.jpg",
       "/images/delivery-3.jpg"
-    ]
+    ],
+        tag: ["React"]
     },
     "E-commerce": {
         title: "E-commerce",
-        description: "Plataforma de comercio electrónico con catálogo de productos y sistema de pago.",
+        description: "Plataforma de comercio electrónico con catálogo de productos y sistema de pago Plataforma de comercio electrónico con catálogo de productos y sistema de pago.",
         images: [
       "/ecommerce-1.jpg",
       "/ecommerce-2.jpg",
@@ -25,15 +26,17 @@ export const projectData = {
       "/images/delivery-1.jpg",
       "/images/delivery-2.jpg",
       "/images/delivery-3.jpg"
-    ]
+    ],
+        tag: ["React"]
     },
-    "Script": {
-        title: "Blog UI",
+    "Scripts": {
+        title: "Scripts",
         description: "Interfaz de usuario moderna y responsiva para un blog personal.",
         images: [
       "/images/delivery-1.jpg",
       "/images/delivery-2.jpg",
       "/images/delivery-3.jpg"
-    ]
+    ],
+        tag: ["React"]
     },
 };
