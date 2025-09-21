@@ -4,7 +4,7 @@ const SideNavigation = ({ currentSection, totalSections, onNavigate }) => {
       {Array.from({ length: totalSections }).map((_, index) => (
         <div
           key={index}
-          className={`nav-indicator ${currentSection === index ? "active" : ""}`}
+          className={`nav-indicator ${currentSection === index ? "active" : "" }`}
           onClick={() => onNavigate(index)}
           title={`Sección ${index + 1}`}
         />

@@ -4,7 +4,7 @@ const ThreeCardsSection = () => {
   return (
     <div className="w-full">
       {/* Mobile: 2x2 grid */}
-      <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:hidden">
+      <div className="grid grid-cols-2 mx-16 gap-4 sm:gap-3 lg:hidden">
         <CardWithDots title="LinkedIn" description="Conecta profesionalmente" type="linkedin" href="https://www.linkedin.com/in/giovani-linares/"/>
         <CardWithDots title="Github" description="Explora mis proyectos" type="github" href="https://github.com/Giovani-DevCoder" />
         <CardWithDots title="Email" description="Contacto directo" type="email" />

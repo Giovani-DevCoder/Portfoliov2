@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import Home from "./components/sections/Home"
+import Home from "./components/sections/Home/Home"
 import About from "./components/sections/About"
 import Project from "./components/sections/Project"
 import Skills from "./components/sections/Skills";  // Nueva línea

@@ -93,7 +93,7 @@ const renderIcon = () => {
           style={{ pointerEvents: open ? "auto" : "none" }}
         >
           <div
-            className={`relative transition-all duration-500 ease-out rounded-2xl border-4 border-red-800
+            className={`relative transition-all duration-500 ease-out rounded-2xl border-4 border-indigo-600
               ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
             `}
             style={{
@@ -118,7 +118,7 @@ const renderIcon = () => {
                   ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
                 `}
               >
-                <h2 className="text-2xl font-bold mb-4">{projectInfo.title}</h2>
+                <h2 className="text-2xl mb-4">{projectInfo.title}</h2>
 
                 <div className="flex gap-5">
 
@@ -180,7 +180,7 @@ const renderIcon = () => {
                   {projectInfo.tag.map((tag, index) => (
                     <span 
                     key = {index}
-                    className="flex items-center justify-center text-neutral-200 bg-red-800 gap-2 px-4 py-1 rounded-full cursor-default">
+                    className="flex items-center justify-center text-neutral-200 bg-indigo-500 gap-2 px-4 py-1 rounded-full cursor-default">
                       {techIcons[tag] && <span>{techIcons[tag]}</span>}
                       <span>{tag}</span>
                     </span>

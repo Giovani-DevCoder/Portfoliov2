@@ -36,17 +36,17 @@ const CardWithDots = ({ title, description, type, href }) => {
     const iconSize = "w-4 h-4 lg:w-6 lg:h-6"
     switch (type) {
       case "github":
-        return <Github className={`${iconSize} text-white`} />
+        return <Github className={`${iconSize} ${isLightMode ? "text-neutral-700" : "text-white"}`} />
       case "githubProject":
-        return <Github className={`${iconSize} text-white`} />
+        return <Github className={`${iconSize} ${isLightMode ? "text-neutral-700" : "text-white"}`} />
       case "linkedin":
-        return <Linkedin className={`${iconSize} text-white`} />
+        return <Linkedin className={`${iconSize} ${isLightMode ? "text-neutral-700" : "text-white"}`} />
       case "CV":
-        return <Newspaper className={`${iconSize} text-white`} />
+        return <Newspaper className={`${iconSize} ${isLightMode ? "text-neutral-700" : "text-white"}`} />
       case "email":
-        return isCopied ? <Check className={`${iconSize} text-white`} /> : <Mail className={`${iconSize} text-white`} />
+        return isCopied ? <Check className={`${iconSize} ${isLightMode ? "text-neutral-700" : "text-white"}`} /> : <Mail className={`${iconSize} ${isLightMode ? "text-neutral-700" : "text-white"}`} />
       case "Ir":
-        return <Box className={`${iconSize} text-white`} />
+        return <Box className={`${iconSize} ${isLightMode ? "text-neutral-700" : "text-white"}`} />
         default:
         return null
     }

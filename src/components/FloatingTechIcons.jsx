@@ -36,12 +36,15 @@ const FloatingTechIcons = () => {
   const getResponsiveConfig = () => {
     const configs = {
       mobile: {
-        iconCount: 4,
+        iconCount: 7,
         basePositions: [
-          { baseX: -60, baseY: -40, size: 20 },
-          { baseX: 70, baseY: 15, size: 18 },
-          { baseX: -80, baseY: -15, size: 22 },
-          { baseX: 50, baseY: -60, size: 19 }
+          { baseX: -100, baseY: -50, size: 20 },
+          { baseX: 120, baseY: 20, size: 18 },
+          { baseX: -120, baseY: -10, size: 22 },
+          { baseX: 70, baseY: -70, size: 19 },
+          { baseX: -60, baseY: -80, size: 22 },
+          { baseX: 155, baseY: -30, size: 23 },
+          { baseX: 30, baseY: -90, size: 24 }
         ],
         floatRange: 1,
         repelDistance: 40

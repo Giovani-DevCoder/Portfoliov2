@@ -44,6 +44,26 @@ p{
   color: #dcdcdc;
 }
 
+span{
+  font-family: "Orbitron", sans-serif;
+  font-weight: 200;
+  font-size: 0.9em;
+  line-height: 1.5;
+  color: #dcdcdc;
+}
+
+.home-tittle {
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: 2.8em;
+}
+
+.home-subtittle {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  font-size: 1.8em;
+}
+
 .gradient-color {
   background: linear-gradient(to bottom, #dddddd, #cacaca);
   -webkit-background-clip: text;
@@ -181,6 +201,16 @@ section {
 
 .nav-indicator:hover {
   background-color: rgba(255, 255, 255, 0.6);
+}
+
+.light-mode .nav-indicator.active {
+  background-color: #222; /* o el color oscuro que prefieras */
+  box-shadow: 0 0 10px rgba(34, 34, 34, 0.8);
+}
+
+.light-mode .nav-indicator {
+  background-color: #444444; /* o el color oscuro que prefieras */
+  box-shadow: 0 0 10px rgba(34, 34, 34, 0.8);
 }
 
 .navigation-buttons {

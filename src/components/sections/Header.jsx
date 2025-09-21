@@ -13,6 +13,16 @@ const Header = ({ currentSection, navigateToSection, sections }) => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  const [isLightMode, setIsLightMode] = useState(document.body.classList.contains("light-mode"));
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsLightMode(document.body.classList.contains("light-mode"));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header
       className={`fixed top-4 left-0 right-0 z-50 transition-all duration-300 ${
@@ -34,12 +44,13 @@ const Header = ({ currentSection, navigateToSection, sections }) => {
               }}
               className={`
                 relative overflow-hidden
-                text-zinc-300 cursor-pointer hover:text-white 
+                text-zinc-300 cursor-pointer hover:text-zinc-400 
                 transition text-sm sm:text-base uppercase tracking-wide
-                ${currentSection === idx ? "font-bold text-white" : ""}
+                ${currentSection === idx ? "font-bold text-green-500" : ""}
                 after:content-[''] after:absolute after:bottom-0 after:left-0 
-                after:w-0 after:h-px after:bg-white after:transition-all after:duration-300
+                after:w-0 after:h-px after:transition-all after:duration-300
                 hover:after:w-full
+                ${isLightMode ? "after:bg-neutral-700" : "after:bg-white"}
               `}
             >
               {section.id.charAt(0).toUpperCase() + section.id.slice(1)}
