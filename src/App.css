@@ -23,6 +23,11 @@ h1 {
   line-height: 1.1;
   max-width: 100%;
 }
+
+.experiencia {
+  font-size: 3.5rem;
+}
+
 h2 {
   font-family: "Rajdhani", sans-serif;
   font-weight: 500;
@@ -42,6 +47,13 @@ p{
   font-size: 1.2em;
   line-height: 1.5;
   color: #dcdcdc;
+}
+
+a{
+  color: #dcdcdc
+}
+a:hover p{
+  color: #52525b
 }
 
 span{

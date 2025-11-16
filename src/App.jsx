@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Home from "./components/sections/Home/Home"
 import About from "./components/sections/About"
 import Project from "./components/sections/Project"
-import Skills from "./components/sections/Skills";  // Nueva línea
+import Experience from "./components/sections/Experience";
 import SideNavigation from "./components/SideNavigation"
 import NavigationButtons from "./components/NavigationButtons"
 import "./App.css"
@@ -80,14 +80,14 @@ function App() {
 
   const sections = [
     { id: "home", component: <Home /> },
+    { id: "experience", component: <Experience /> },
     { id: "projects", component: <Project onOpenModal={handleOpenModal} /> },
-    { id: "about", component: <About /> },
-    { id: "skills", component: <Skills /> },
+    { id: "about", component: <About /> }
   ]
 
   return (
     <div className="app-container">
-      {currentSection === 1 && (
+      {currentSection === 2 && (
       <CircleTransitionModal open={modalOpen} onClose={handleCloseModal}>
 
         {selectedProject}
