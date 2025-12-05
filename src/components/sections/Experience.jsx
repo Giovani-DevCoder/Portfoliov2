@@ -1,7 +1,12 @@
-import React from 'react';
+import { useEffect, useRef, useState } from "react"
 import { FaLinkedin } from "react-icons/fa";
 
-const Experience = () => {
+
+
+const Experience = ({onOpenModal}) => {
+
+  
+
   return (
     <section className="h-screen w-full flex items-center justify-center px-8 md:px-12 lg:px-20 py-24 bg-background">
       <div className="max-w-6xl w-full h-full flex items-center py-8">
@@ -15,9 +20,9 @@ const Experience = () => {
 
             <div className="space-y-6">
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-1">Desarrollador de automatizacion y SEO</h3>
-                <p className="text-primary font-semibold mb-1">Nombre de la Empresa</p>
-                <p className="text-sm text-muted-foreground">Ene 2024 - Presente • 1 año</p>
+                <h2 className="experience text-2xl font-bold text-foreground mb-1">Desarrollador de automatizacion y SEO</h2>
+                <h3 className="text-primary font-semibold mb-1">Contratista independiente</h3>
+                <p className="text-sm text-muted-foreground">• Jul 2024 - Nov 2025</p>
               </div>
 
               <div className="space-y-3">
@@ -25,15 +30,15 @@ const Experience = () => {
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
-                    <span>Desarrollo y mantenimiento de aplicaciones web usando React y Node.js</span>
+                    <span className="spanRead">Desarrollo y mantenimiento de aplicaciones web usando React y Node.js</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
-                    <span>Colaboración con equipos multidisciplinarios para entregar soluciones de calidad</span>
+                    <span className="spanRead">Colaboración con equipos multidisciplinarios para entregar soluciones de calidad</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
-                    <span>Implementación de mejores prácticas de código y optimización de rendimiento</span>
+                    <span className="spanRead">Implementación de mejores prácticas de código y optimización de rendimiento</span>
                   </li>
                 </ul>
               </div>
@@ -56,7 +61,9 @@ const Experience = () => {
           <div className="md:col-span-3 flex flex-col gap-6">
             <div className="grid grid-cols-2 gap-4 flex-1">
               {/* Proyecto 1 */}
-              <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer flex flex-col">
+              <button
+              onClick={() => onOpenModal("Transcriptor")}
+              className="bg-card border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer flex flex-col">
                 <div className="flex-1 bg-muted relative overflow-hidden">
                   <img
                     src="/transcriptor.webp"
@@ -72,10 +79,11 @@ const Experience = () => {
                     <span className="text-green-600 font-medium">Completado</span>
                   </div>
                 </div>
-              </div>
+              </button>
 
               {/* Proyecto 2 */}
-              <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer flex flex-col">
+              <button onClick={() => onOpenModal("Scraper")}
+              className="bg-card border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer flex flex-col">
                 <div className="flex-1 bg-muted relative overflow-hidden">
                   <img src="/scraper.webp"
                   alt="Proyecto 2"
@@ -89,7 +97,7 @@ const Experience = () => {
                     <span className="text-green-600 font-medium">Completado</span>
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
 
             <div className="bg-card border border-border rounded-2xl p-6 shadow-lg">

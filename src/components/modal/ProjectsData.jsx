@@ -1,4 +1,17 @@
 export const projectData = {
+
+    
+    "Scraper": {
+        title: "Scraper",
+        description: "Interfaz de usuario moderna y responsiva para un blog personal.",
+        images: [
+      "/images/delivery-1.jpg",
+      "/images/delivery-2.jpg",
+      "/images/delivery-3.jpg"
+    ],
+        tag: ["React"]
+    },
+
     "Delivery App": {
         title: "Delivery App",
         description: "Aplicación de entrega de comida con funcionalidades de usuario y administrador.",

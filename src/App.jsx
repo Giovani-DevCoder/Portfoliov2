@@ -80,14 +80,14 @@ function App() {
 
   const sections = [
     { id: "home", component: <Home /> },
-    { id: "experience", component: <Experience /> },
-    { id: "projects", component: <Project onOpenModal={handleOpenModal} /> },
+    { id: "experience", component: <Experience onOpenModal={handleOpenModal} /> },
+    { id: "projects", component: <Project  /> },
     { id: "about", component: <About /> }
   ]
 
   return (
     <div className="app-container">
-      {currentSection === 2 && (
+      {currentSection === 1 && (
       <CircleTransitionModal open={modalOpen} onClose={handleCloseModal}>
 
         {selectedProject}

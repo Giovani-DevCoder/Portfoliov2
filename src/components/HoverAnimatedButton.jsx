@@ -1,6 +1,5 @@
-// components/HoverAnimatedButton.jsx
 import React from "react"
-import styles from "./sections/project.module.css" // Ajusta la ruta si es necesario
+import styles from "./sections/project.module.css"
 
 const HoverAnimatedButton = ({
   videoSrc,
