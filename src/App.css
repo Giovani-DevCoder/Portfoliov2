@@ -15,25 +15,8 @@ body {
     background: linear-gradient(to bottom right, #171028 10%, #181818 60%);
 }
 
-h1 {
-  font-family: "Oswald", sans-serif;
-  font-weight: 500;
-  font-size: 4.8em;
-  letter-spacing: 1px;
-  line-height: 1.1;
-  max-width: 100%;
-}
-
 .experiencia {
   font-size: 3.5rem;
-}
-
-h2 {
-  font-family: "Rajdhani", sans-serif;
-  font-weight: 500;
-  font-size: 2.5em;
-  line-height: 1.2;
-  max-width: 100%;
 }
 
 .experience {
@@ -78,13 +61,13 @@ span{
 .home-tittle {
   font-family: "Oswald", sans-serif;
   font-weight: 500;
-  font-size: 2.8em;
+  font-size: 3.8em;
 }
 
 .home-subtittle {
   font-family: "Rajdhani", sans-serif;
   font-weight: 500;
-  font-size: 1.8em;
+  font-size: 2.4em;
 }
 
 .gradient-color {
@@ -189,9 +172,9 @@ section {
 }
 
 .section-home {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* Estas clases de layout fueron eliminadas porque ya las manejamos
+     con clases de Tailwind en el componente React. 
+     Solo dejamos lo que evita el scroll innecesario. */
   padding: 0;
   overflow: hidden;
 }
@@ -442,6 +425,8 @@ section {
 
 /* Mobile Specific Styles */
 @media (max-width: 1023px) {
+  /* ... (Estilos de tipografía y navegación de móvil sin cambios) ... */
+  
   .section-home {
     padding: 0;
     overflow: hidden;
@@ -498,9 +483,9 @@ section {
 /* Desktop Specific Styles */
 @media (min-width: 1024px) {
   .section-home {
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: center;
+    /* CAMBIO CLAVE: Eliminado flex-direction: row-reverse y justify-content/align-items.
+       Esto revertía el comportamiento de apilamiento vertical que creamos en React.
+       Ahora solo ajustamos el padding. */
     padding: 2rem;
   }
   

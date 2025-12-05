@@ -4,7 +4,8 @@ import { Github, Linkedin, Mail, Check, Newspaper, Box } from 'lucide-react'
 const CardWithDots = ({ title, description, type, href }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
-  const email = "tu-email@ejemplo.com"
+  const email = "tu-email@ejemplo.com";
+
 
   const handleMouseEnter = () => {
     setIsHovered(true)
@@ -84,16 +85,30 @@ const CardWithDots = ({ title, description, type, href }) => {
   return (
     <div className="w-full">
       <div className="relative">
-        <div
-          className={`relative z-10 rounded-lg lg:rounded-2xl
-            ${isLightMode ? "bg-white bg-opacity-80 border-neutral-300" : "bg-neutral-800 bg-opacity-70"}
-            backdrop-blur-sm grid justify-items-center items-center h-12 lg:h-20 cursor-pointer overflow-hidden 
-            transition-all duration-300 px-2 lg:px-4`}
+        
+        <div 
+          className={`absolute inset-0 
+            ${isLightMode ? "bg-neutral-800" : "bg-neutral-300"} 
+            rounded-lg lg:rounded-2xl
+            translate-x-1.5 translate-y-1.5 
+            z-0
+          `} 
+        />
+        
+        <button
+          className={`relative z-10 appearance-none
+            grid justify-items-center items-center h-12 lg:h-20 w-full 
+            
+            rounded-lg lg:rounded-2xl
+            ${isLightMode ? "bg-neutral-300 bg-opacity-80 border-2 border-neutral-800" : "bg-neutral-800 bg-opacity-70 border-2 border-neutral-300"}
+            backdrop-blur-sm cursor-pointer overflow-hidden 
+
+          `}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          onClick={handleClick}
+          type="button"
+          onClick={handleClick} 
         >
-          {/* Animación de fondo */}
           <div
             className={`absolute rounded-full 
               ${isLightMode ? "bg-neutral-200" : "bg-neutral-600"}
@@ -103,12 +118,10 @@ const CardWithDots = ({ title, description, type, href }) => {
             style={{ width: "10px", height: "10px" }}
           />
 
-          {/* Contenido normal */}
           <div className={`transition-opacity duration-300 text-center ${isHovered ? "opacity-0" : "opacity-100"} ${isLightMode ? "text-neutral-800" : ""}`}>
             <h3 className="text-xs lg:text-base font-medium">{title}</h3>
           </div>
           
-          {/* Contenido hover */}
           <div
             className={`absolute inset-0 flex flex-col items-center justify-center gap-1 lg:gap-2 transition-all duration-500 ${
               isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
@@ -117,7 +130,7 @@ const CardWithDots = ({ title, description, type, href }) => {
             {renderIcon()}
             <p className="text-xs lg:text-base font-medium text-center px-2">{renderText()}</p>
           </div>
-        </div>
+        </button>
       </div>
     </div>
   )
