@@ -12,9 +12,9 @@ const Home = () => {
         <section className='section-home min-h-screen flex flex-col items-center justify-start gap-y-4 p-4 sm:p-6 lg:p-8'>
             <ShootingStars side="both" frequency={1} />
             
-            <div className='w-full max-w-5xl flex flex-col items-center justify-start h-full'> {/* Usamos h-full aquí para que Flexbox funcione correctamente dentro del min-h-screen */}
+            <div className='w-full max-w-5xl flex flex-col items-center justify-start h-full'>
             
-                <div className="block lg:hidden w-full h-full flex flex-col items-center justify-start"> {/* h-full y justify-start para controlar el espacio */}
+                <div className="block lg:hidden w-full h-full flex flex-col items-center justify-start">
 
                     <div className='relative flex items-center justify-center mt-6 w-full'>
                         <div className="relative">
