@@ -1,6 +1,6 @@
 Portafolios realizado con React y Vite.
 
-Tematica espacio, colores predominantes: Blanco y negro. Avances en el Home, creacion de diseño responsive. Avances en el project. About altamente progresado, agregada seccion de experiencia. Cambios en el desplazamiento.
+Tematica espacio, colores predominantes: Blanco y negro. Avances en el Home, creacion de diseño responsive. Avances en el project. About altamente progresado, agregada seccion de experiencia. Cambios en el desplazamiento. Actualizacion del css, optimizacion de recursos.
 
 # React + Vite
 
