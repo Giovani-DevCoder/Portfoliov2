@@ -14,10 +14,10 @@ const Home = () => {
             
             <div className='w-full max-w-5xl flex flex-col items-center justify-start h-full'>
             
-                <div className="block lg:hidden w-full h-full flex flex-col items-center justify-start">
+                <div className="block lg:hidden w-full h-full flex flex-col items-center justify-start p-6">
 
-                    <div className='relative flex items-center justify-center mt-6 w-full'>
-                        <div className="relative">
+                    <div className='relative flex items-center justify-center w-full mt-12'>
+                        <div className="relative scale-180 pt-8 px-10">
                             <BlackHoleAnimation 
                                 coreImageWEBP={blackHole01WEBP}
                                 ringImageWEBP={blackHole02WEBP}
@@ -26,7 +26,7 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className='relative z-30 flex flex-col items-center text-center mt-6'>
+                    <div className='relative z-30 flex flex-col items-center text-center w-full max-w-md pb-8'>
 
                         <div className="mb-6 w-full">
                             <ModeSelector />

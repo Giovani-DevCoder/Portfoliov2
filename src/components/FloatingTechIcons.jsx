@@ -43,7 +43,7 @@ const FloatingTechIcons = () => {
           { baseX: -120, baseY: -10, size: 22 },
           { baseX: 70, baseY: -70, size: 19 },
           { baseX: -60, baseY: -80, size: 22 },
-          { baseX: 155, baseY: -30, size: 23 },
+          { baseX: 90, baseY: -8, size: 23 },
           { baseX: 30, baseY: -90, size: 24 }
         ],
         floatRange: 1,
@@ -52,13 +52,13 @@ const FloatingTechIcons = () => {
       desktop: {
         iconCount: 7,
         basePositions: [
-          { baseX: -180, baseY: -120, size: 64 },
+          { baseX: -170, baseY: -120, size: 64 },
           { baseX: 200, baseY: 30, size: 38 },
-          { baseX: -220, baseY: -40, size: 51 },
+          { baseX: -200, baseY: -20, size: 51 },
           { baseX: 160, baseY: -150, size: 41 },
-          { baseX: -120, baseY: -200, size: 44 },
-          { baseX: 258, baseY: -65, size: 50 },
-          { baseX: 65, baseY: -170, size: 51 }
+          { baseX: -80, baseY: -170, size: 44 },
+          { baseX: 218, baseY: -45, size: 50 },
+          { baseX: 65, baseY: -130, size: 48 }
         ],
         floatRange: 2.5,
         repelDistance: 100

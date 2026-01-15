@@ -103,6 +103,9 @@ const CardWithDots = ({ title, description, type, href }) => {
             ${isLightMode ? "bg-neutral-300 bg-opacity-80 border-2 border-neutral-800" : "bg-neutral-800 bg-opacity-70 border-2 border-neutral-300"}
             backdrop-blur-sm cursor-pointer overflow-hidden 
 
+            transition-transform duration-50 ease-in-out
+            active:translate-x-1.5 active:translate-y-1.5
+
           `}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
