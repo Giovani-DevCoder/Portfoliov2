@@ -30,10 +30,10 @@ function App() {
 
   useEffect(() => {
     const handleWheel = (e) => {
-      if (isTransitioning) {
-        e.preventDefault()
-        return
-      }
+      if (modalOpen || isTransitioning) {
+      e.preventDefault();
+      return;
+    }
 
       if (e.deltaY > 0 && currentSection < totalSections - 1) {
         navigateToSection(currentSection + 1)
@@ -50,11 +50,11 @@ function App() {
       window.removeEventListener("wheel", handleWheel)
       window.removeEventListener("touchmove", handleWheel)
     }
-  }, [currentSection, isTransitioning])
+  }, [currentSection, isTransitioning, modalOpen])
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (isTransitioning) return
+      if (modalOpen || isTransitioning) return;
 
       if (e.key === "ArrowDown" && currentSection < totalSections - 1) {
         navigateToSection(currentSection + 1)
@@ -65,7 +65,7 @@ function App() {
 
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [currentSection, isTransitioning])
+  }, [currentSection, isTransitioning, modalOpen])
 
   const navigateToSection = (index) => {
     if (index >= 0 && index < totalSections && !isTransitioning) {
@@ -81,13 +81,13 @@ function App() {
   const sections = [
     { id: "home", component: <Home /> },
     { id: "experience", component: <Experience onOpenModal={handleOpenModal} /> },
-    { id: "projects", component: <Project  /> },
+    { id: "projects", component: <Project  onOpenModal={handleOpenModal} /> },
     { id: "about", component: <About /> }
   ]
 
   return (
     <div className="app-container">
-      {currentSection === 1 && (
+      {[1,2].includes(currentSection) && (
       <CircleTransitionModal open={modalOpen} onClose={handleCloseModal}>
 
         {selectedProject}

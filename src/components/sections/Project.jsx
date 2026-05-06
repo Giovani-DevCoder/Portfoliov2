@@ -3,7 +3,7 @@ import HoverAnimatedButton from "../HoverAnimatedButton"
 import styles from "./project.module.css"
 
 const delays = [0, 0.4, 0.6]
-const totalTime = 1.5
+const totalTime = 1
 
 function useOnScreen(options) {
   const ref = useRef()
@@ -32,14 +32,14 @@ const Project = ({ onOpenModal }) => {
         () => {
           setAnimationComplete(true)
         },
-        (totalTime + Math.max(...delays)) * 1000,
+        (totalTime + Math.max(...delays)) * 500,
       )
       setTimeout(
         () => {
           setShowGreen(true)
           setShowPink(true)
         },
-        (totalTime + Math.max(...delays)) * 1000 + 50,
+        (totalTime + Math.max(...delays)) * 500 + 25,
       )
     }
   }, [isVisible, animate])
@@ -59,7 +59,7 @@ const Project = ({ onOpenModal }) => {
             <button className={`transition-all duration-1000 ease-in-out ${showGreen ? "h-1/2" : "h-full"}`}
             onClick={() => onOpenModal("Delivery App")}>
               <HoverAnimatedButton
-                videoSrc="/col1-1.webm"
+                src="/04.png"
                 text="Delivery app"
                 animationDelay={`${delays[0]}s`}
                 animationDuration={`${totalTime - delays[0]}s`}
@@ -84,7 +84,7 @@ const Project = ({ onOpenModal }) => {
         <div className="w-full h-[70vh] flex">
           <button onClick={() => onOpenModal("E-commerce")}>
             <HoverAnimatedButton
-              videoSrc="/col2.webm"
+              src="/02.png"
               text="E-commerce"
               animationDelay={`${delays[1]}s`}
               animationDuration={`${totalTime - delays[1]}s`}
@@ -106,7 +106,7 @@ const Project = ({ onOpenModal }) => {
               onClick={() => onOpenModal("Transcriptor")}
             >
               <HoverAnimatedButton
-                videoSrc="/col3-1.webm"
+                src="/01.png"
                 text="Video Intro"
                 animationDelay={`${delays[2]}s`}
                 animationDuration={`${totalTime - delays[2]}s`}
@@ -119,7 +119,7 @@ const Project = ({ onOpenModal }) => {
               onClick={() => onOpenModal("Scripts")}
             >
               <HoverAnimatedButton
-                videoSrc="/col3-2.webm"
+                src="/03.png"
                 text="Blog UI"
                 animationDelay={`${delays[2]}s`}
                 animationDuration={`${totalTime - delays[2]}s`}

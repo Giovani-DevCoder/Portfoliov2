@@ -46,10 +46,7 @@ a:hover p{
 
 span{
   font-family: "Orbitron", sans-serif;
-  font-weight: 200;
   font-size: 0.9em;
-  line-height: 1.5;
-  color: #dcdcdc;
 }
 
 .spanRead{
@@ -172,9 +169,6 @@ section {
 }
 
 .section-home {
-  /* Estas clases de layout fueron eliminadas porque ya las manejamos
-     con clases de Tailwind en el componente React. 
-     Solo dejamos lo que evita el scroll innecesario. */
   padding: 0;
   overflow: hidden;
 }
@@ -425,7 +419,6 @@ section {
 
 /* Mobile Specific Styles */
 @media (max-width: 1023px) {
-  /* ... (Estilos de tipografía y navegación de móvil sin cambios) ... */
   
   .section-home {
     padding: 0;
@@ -483,9 +476,6 @@ section {
 /* Desktop Specific Styles */
 @media (min-width: 1024px) {
   .section-home {
-    /* CAMBIO CLAVE: Eliminado flex-direction: row-reverse y justify-content/align-items.
-       Esto revertía el comportamiento de apilamiento vertical que creamos en React.
-       Ahora solo ajustamos el padding. */
     padding: 2rem;
   }
   
@@ -522,4 +512,3 @@ section {
     height: 42px;
   }
 }
-

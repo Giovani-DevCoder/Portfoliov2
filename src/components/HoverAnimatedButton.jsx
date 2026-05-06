@@ -2,7 +2,7 @@ import React from "react"
 import styles from "./sections/project.module.css"
 
 const HoverAnimatedButton = ({
-  videoSrc,
+  src,
   text,
   className = "",
   style = {},
@@ -18,19 +18,13 @@ const HoverAnimatedButton = ({
         ...style,
       }}
     >
-      {/* Texto animado */}
       <div className={styles.textHoverWrapper}>
         <span className={styles.textHoverAnimation}>{text}</span>
       </div>
 
-      {/* Video de fondo */}
-      <video
-        src={videoSrc}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="w-full h-full object-cover filter grayscale-75 transition-all duration-300 hover:grayscale-0"
+      <img
+        src={src}
+        className="w-full h-full object-contain right-20 filter bg-zinc-700 grayscale-75 transition-all duration-300 hover:grayscale-0 hover:opacity-60"
       />
     </button>
   )

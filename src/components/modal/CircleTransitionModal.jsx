@@ -2,6 +2,8 @@ import { useState, useEffect } from "react"
 import { projectData } from "./ProjectsData"
 import CardsSectionModal from "./CardsSectionModal"
 import { techIcons } from "./Icons";
+import { IoCloseCircle } from "react-icons/io5";
+
 
 const CircleTransitionModal = ({ open, onClose, children }) => {
   const [showContent, setShowContent] = useState(false)
@@ -25,19 +27,16 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
     }
   }, [open])
 
-  // Función para navegar entre imágenes
   const goToSlide = (index) => {
     setCurrentImageIndex(index)
   }
 
-  // Función para siguiente imagen
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => 
       (prevIndex + 1) % projectInfo.images.length
     )
   }
 
-  // Función para imagen anterior
   const prevImage = () => {
     setCurrentImageIndex((prevIndex) => 
       (prevIndex - 1 + projectInfo.images.length) % projectInfo.images.length
@@ -46,7 +45,7 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
 
   useEffect(() => {
     setCurrentImageIndex(0)
-    setIsAutoPlaying(true) // Reactivar auto-play al cambiar de proyecto
+    setIsAutoPlaying(true)
   }, [children])
 
   useEffect(() => {
@@ -57,7 +56,7 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
         setCurrentImageIndex((prevIndex) => 
           (prevIndex + 1) % projectInfo.images.length
         )
-      }, 3000) // Cambia cada 3 segundos
+      }, 3000)
     }
     
     return () => {
@@ -78,7 +77,6 @@ const renderIcon = () => {
 
   return (
     <div className={`fixed inset-0 z-[9999] pointer-events-none`} style={{ overflow: "hidden" }}>
-      {/* Círculo de expansión - Solo efecto visual */}
       <div
         className={`absolute top-1/2 left-0 bg-zinc-900 rounded-full transition-[width,height,transform] duration-700 ease-in-out
           ${open ? "w-[200vw] h-[200vh] -translate-y-1/2 -translate-x-1/2" : "w-32 h-32 -translate-y-1/2 -translate-x-1/2"}
@@ -86,14 +84,13 @@ const renderIcon = () => {
         style={{ pointerEvents: "none" }}
       />
 
-      {/* Contenido independiente centrado en el viewport */}
       {open && (
         <div
           className="fixed inset-0 flex items-center justify-center pointer-events-auto"
           style={{ pointerEvents: open ? "auto" : "none" }}
         >
           <div
-            className={`relative transition-all duration-500 ease-out rounded-2xl border-4 border-indigo-600
+            className={`relative transition-all duration-500 ease-out rounded-2xl border-2 border-zinc-300
               ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
             `}
             style={{
@@ -103,22 +100,17 @@ const renderIcon = () => {
               maxHeight: "800px",
             }}
           >
-            {/* Botón de cerrar */}
-            <button
-              className="absolute top-2 right-3 bg-white rounded-full w-12 h-12 flex items-center justify-center text-black text-xl font-bold shadow-lg hover:bg-gray-100 transition-all duration-200 hover:scale-110 z-10"
+            <IoCloseCircle
+              className="absolute top-4 right-4 rounded-full w-10 h-10 shadow-lg cursor-pointer transition-all duration-200 hover:scale-110 z-10"
               onClick={onClose}
-            >
-              ×
-            </button>
-
-            {/* Contenido principal */}
+            />
             <div className="text-white h-full w-full p-8 overflow-auto">
               <div
                 className={`h-full transition-all duration-700 delay-100 ease-out
                   ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
                 `}
               >
-                <h2 className="text-2xl mb-4">{projectInfo.title}</h2>
+                <h1 className="text-4xl mb-3">{projectInfo.title}</h1>
 
                 <div className="flex gap-5">
 
@@ -132,7 +124,6 @@ const renderIcon = () => {
                               className="w-full h-full object-cover transition-opacity duration-500"
                             />
 
-                            {/* Botones de navegación */}
                             {projectInfo.images.length > 1 && (
                               <>
                                 <button
@@ -151,7 +142,6 @@ const renderIcon = () => {
                             )}
                           </div>
                           
-                          {/* Indicadores de imágenes */}
                           {projectInfo.images.length > 1 && (
                             <div className="bottom-4 left-0 right-0 flex justify-center space-x-2">
                               {projectInfo.images.map((_, index) => (
@@ -180,7 +170,7 @@ const renderIcon = () => {
                   {projectInfo.tag.map((tag, index) => (
                     <span 
                     key = {index}
-                    className="flex items-center justify-center text-neutral-200 bg-indigo-500 gap-2 px-4 py-1 rounded-full cursor-default">
+                    className="flex items-center justify-center text-neutral-300 bg-zinc-700 gap-2 px-2 py-1 rounded-full cursor-default">
                       {techIcons[tag] && <span>{techIcons[tag]}</span>}
                       <span>{tag}</span>
                     </span>
