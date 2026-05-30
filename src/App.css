@@ -30,11 +30,8 @@ h3 {
 }
 
 p{
-  font-family: "Barlow Semi Condensed", sans-serif;
-  font-weight: 200;
-  font-size: 1.2em;
+  font-size: 1em;
   line-height: 1.5;
-  color: #dcdcdc;
 }
 
 a{
@@ -42,11 +39,6 @@ a{
 }
 a:hover p{
   color: #52525b
-}
-
-span{
-  font-family: "Orbitron", sans-serif;
-  font-size: 0.9em;
 }
 
 .spanRead{

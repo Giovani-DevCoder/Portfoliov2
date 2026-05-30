@@ -56,15 +56,26 @@ const Project = ({ onOpenModal }) => {
       >
         {/* Columna 1 */}
         <div className="w-full h-[70vh] flex flex-col gap-5">
-            <button className={`transition-all duration-1000 ease-in-out ${showGreen ? "h-1/2" : "h-full"}`}
-            onClick={() => onOpenModal("Delivery App")}>
-              <HoverAnimatedButton
-                src="/04.png"
-                text="Delivery app"
-                animationDelay={`${delays[0]}s`}
-                animationDuration={`${totalTime - delays[0]}s`}
-                className={`${!animate ? styles.hiddenUntilVisible : ""} ${animate ? styles.colAnim : ""} h-full`}
-              />
+            <button className={`relative overflow-hidden pointer-events-none transform scale-x-[-1] transition-all duration-1000 ease-in-out ${showGreen ? "h-1/2" : "h-full"}`}
+            onClick={() => onOpenModal("")}>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute top-0 left-0 w-full h-full object-cover z-0"
+              >
+                <source src="/starsbackground.webm" type="video/webm" />
+              </video>
+                <HoverAnimatedButton
+                  transparent={true}
+                  src="/projectAstronauta.png"
+                  animationDelay={`${delays[0]}s`}
+                  animationDuration={`${totalTime - delays[0]}s`}
+                  className={`${!animate ? styles.hiddenUntilVisible : ""} ${animate ? styles.colAnim : ""} animate-float-astronauta h-full`}
+                
+                />
+                
             </button>
 
           <div className={`transition-all duration-1000 ease-in-out w-full ${showGreen ? "h-1/2" : "h-0"}`}>
@@ -85,7 +96,7 @@ const Project = ({ onOpenModal }) => {
           <button onClick={() => onOpenModal("E-commerce")}>
             <HoverAnimatedButton
               src="/02.png"
-              text="E-commerce"
+              text="TIENDA VIRTUAL"
               animationDelay={`${delays[1]}s`}
               animationDuration={`${totalTime - delays[1]}s`}
               className={`${!animate ? styles.hiddenUntilVisible : ""} ${animate ? styles.colAnim : ""}`}
@@ -107,7 +118,7 @@ const Project = ({ onOpenModal }) => {
             >
               <HoverAnimatedButton
                 src="/01.png"
-                text="Video Intro"
+                text="TRANS CRIP TOR"
                 animationDelay={`${delays[2]}s`}
                 animationDuration={`${totalTime - delays[2]}s`}
                 className={`${animate ? styles.colAnimFromTop : ""} h-full`}
@@ -120,7 +131,7 @@ const Project = ({ onOpenModal }) => {
             >
               <HoverAnimatedButton
                 src="/03.png"
-                text="Blog UI"
+                text="CLAU SELY"
                 animationDelay={`${delays[2]}s`}
                 animationDuration={`${totalTime - delays[2]}s`}
                 className={`${animate ? styles.colAnim : ""} h-full`}
