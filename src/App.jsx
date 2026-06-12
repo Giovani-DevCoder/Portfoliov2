@@ -80,9 +80,9 @@ function App() {
 
   const sections = [
     { id: "home", component: <Home /> },
+    { id: "about", component: <About /> },
     { id: "experience", component: <Experience onOpenModal={handleOpenModal} /> },
-    { id: "projects", component: <Project  onOpenModal={handleOpenModal} /> },
-    { id: "about", component: <About /> }
+    { id: "projects", component: <Project  onOpenModal={handleOpenModal} /> }
   ]
 
   return (

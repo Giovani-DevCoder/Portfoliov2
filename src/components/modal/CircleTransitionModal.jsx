@@ -56,7 +56,7 @@ const CircleTransitionModal = ({ open, onClose, children }) => {
         setCurrentImageIndex((prevIndex) => 
           (prevIndex + 1) % projectInfo.images.length
         )
-      }, 3000)
+      }, 6000)
     }
     
     return () => {
@@ -117,7 +117,7 @@ const renderIcon = () => {
                     {/* Carrusel de imágenes */}
                     {projectInfo.images && projectInfo.images.length > 0 && (
                         <div className="mb-6">
-                          <div className="relative w-2xl h-48 md:h-96 md:w-xl overflow-hidden rounded-xl bg-gray-100 mb-4">
+                          <div className="relative w-2xl h-48 md:h-96 md:w-xl overflow-hidden border-2 rounded-xl bg-gray-100 mb-4">
                             <img
                               src={projectInfo.images[currentImageIndex]}
                               alt={`${projectInfo.title} - Imagen ${currentImageIndex + 1}`}
@@ -128,13 +128,13 @@ const renderIcon = () => {
                               <>
                                 <button
                                   onClick={prevImage}
-                                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/50 text-black p-2 rounded-full hover:bg-white/70 transition-colors cursor-pointer"
                                 >
                                   ‹
                                 </button>
                                 <button
                                   onClick={nextImage}
-                                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/50 text-black p-2 rounded-full hover:bg-white/70 transition-colors cursor-pointer"
                                 >
                                   ›
                                 </button>
@@ -148,7 +148,7 @@ const renderIcon = () => {
                                 <button
                                   key={index}
                                   onClick={() => goToSlide(index)}
-                                  className={`w-3 h-3 rounded-full ${
+                                  className={`w-3 h-3 rounded-full cursor-pointer ${
                                     currentImageIndex === index 
                                       ? 'bg-neutral-500' 
                                       : 'bg-gray-300 hover:bg-gray-400'
@@ -161,8 +161,8 @@ const renderIcon = () => {
                     )}
 
                     <div>
-                        <p className="text-gray-700 max-w-md mb-4">{projectInfo.description}</p>
-                        <CardsSectionModal />
+                        <p className="text-neutral-300 whitespace-pre-line max-w-md mb-4">{projectInfo.description}</p>
+                        <CardsSectionModal buttons={projectInfo.buttons} />
                     </div>
                 </div>
 

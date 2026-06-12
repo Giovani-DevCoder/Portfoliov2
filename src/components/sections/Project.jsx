@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import HoverAnimatedButton from "../HoverAnimatedButton"
 import styles from "./project.module.css"
 
-const delays = [0, 0.4, 0.6]
+const delays = [0, 0.3, 0.5]
 const totalTime = 1
 
 function useOnScreen(options) {
@@ -32,14 +32,14 @@ const Project = ({ onOpenModal }) => {
         () => {
           setAnimationComplete(true)
         },
-        (totalTime + Math.max(...delays)) * 500,
+        (totalTime + Math.max(...delays)) * 800,
       )
       setTimeout(
         () => {
           setShowGreen(true)
           setShowPink(true)
         },
-        (totalTime + Math.max(...delays)) * 500 + 25,
+        (totalTime + Math.max(...delays)) * 800 + 40,
       )
     }
   }, [isVisible, animate])
@@ -58,35 +58,25 @@ const Project = ({ onOpenModal }) => {
         <div className="w-full h-[70vh] flex flex-col gap-5">
             <button className={`relative overflow-hidden pointer-events-none transform scale-x-[-1] transition-all duration-1000 ease-in-out ${showGreen ? "h-1/2" : "h-full"}`}
             onClick={() => onOpenModal("")}>
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="absolute top-0 left-0 w-full h-full object-cover z-0"
-              >
-                <source src="/starsbackground.webm" type="video/webm" />
-              </video>
                 <HoverAnimatedButton
-                  transparent={true}
+                  showVideo={true}
                   src="/projectAstronauta.png"
                   animationDelay={`${delays[0]}s`}
                   animationDuration={`${totalTime - delays[0]}s`}
                   className={`${!animate ? styles.hiddenUntilVisible : ""} ${animate ? styles.colAnim : ""} animate-float-astronauta h-full`}
-                
                 />
                 
             </button>
 
           <div className={`transition-all duration-1000 ease-in-out w-full ${showGreen ? "h-1/2" : "h-0"}`}>
             <button
-              className="w-full h-full rounded-lg flex items-center justify-center text-xl font-bold overflow-hidden"
+              className="w-full h-full rounded-lg flex items-center justify-center text-lg font-bold overflow-hidden"
               style={{
-                backgroundColor: "#333333",
+                backgroundColor: "#272727",
                 color: "#ffffff",
               }}
             >
-              <span>PROYECTOS</span>
+              <span className="spanRead text-5xl">PROYECTOS</span>
             </button>
           </div>
         </div>

@@ -4,22 +4,20 @@ import { ExperienceCard } from "./ui/experienceCard"
 
 const experiences = [
   {
-    id: "1",
+    id: "2",
     title: "Automation Engineer",
     duration: "Septiembre - Diciembre de 2025",
     description:
       "Diseñé flujos de trabajo n8n, integré agentes de Inteligencia Artificial para resolver las necesidades a peticion de mi empleador y desarrollé soluciones de software backend para la extracción y manejo eficiente de scripts.",
     technologies: ["N8N", "Automatizacion", "Agentes de IA", "Scripts"],
-    projectUrl: "https://www.linkedin.com/in/yvonne-angelica-blanco-milano-42499498/",
   },
   {
-    id: "2",
+    id: "1",
     title: "Product Support & Developer",
     duration: "2023 - 2026",
     description:
       "Me encargué de la gestión técnica y optimización SEO del blog de la plataforma, mientras creaba soluciones de código y automatizaciones a medida para eliminar tareas repetitivas de la empresa.",
     technologies: ["Python", "JavaScript", "SEO", "Web"],
-    projectUrl: "https://cursos.frogamesformacion.com/pages/blog",
   },
 ]
 
@@ -61,8 +59,8 @@ const Experience = ({ onOpenModal }) => {
                 <ExperienceCard 
                   key={exp.id} 
                   experience={exp} 
-                  isOpen={openCardId === exp.id} // Evalúa true o false
-                  onToggle={() => handleToggleCard(exp.id)} // Pasa la función de control
+                  isOpen={openCardId === exp.id}
+                  onToggle={() => handleToggleCard(exp.id)}
                 />
               ))}
             </div>
