@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Home from "./components/sections/Home/Home"
-import About from "./components/sections/About"
+import About from "./components/sections/About/About"
 import Project from "./components/sections/Project"
 import Experience from "./components/sections/Experience";
 import SideNavigation from "./components/SideNavigation"

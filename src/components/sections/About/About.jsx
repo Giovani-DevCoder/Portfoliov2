@@ -1,5 +1,5 @@
 import React from 'react';
-
+import AnimatedAstronaut from './AnimatedAstronaut';
 
 const About = () => {
   return (
@@ -8,8 +8,10 @@ const About = () => {
         <div className="grid grid-cols-2 grid-rows-2 w-full h-[75vh]">
       
         {/* Bloque 1: Superior Izquierda */}
-        <div className="border-r border-b border-white p-8">
-          
+        <div className="relative border-r border-b border-white p-8">
+          <div className="absolute left-[20px] bottom-0 translate-y-[37.5%]">
+            <AnimatedAstronaut/>
+          </div>
         </div>
 
         {/* Bloque 2: Superior Derecha */}
@@ -34,10 +36,11 @@ const About = () => {
           <h2 className="text-5xl font-extrabold bg-zinc-200 text-zinc-800 p-1 mb-4">
             MI HUELLA
           </h2>
-
-          <p className="text-zinc-100 text-lg leading-relaxed">
-            SVG
-          </p>
+          <div className="w-10 h-10 bg-neutral-500 mb-20">
+            <p className="text-zinc-100 text-lg leading-relaxed">
+              SVG
+            </p>
+          </div>
         </div>
 
         {/* Bloque 4: Inferior Derecha */}
